@@ -1,0 +1,116 @@
+{
+  "predict": {
+    "overall": {
+      "mean_latency_ms": 1483.0548100007582,
+      "median_latency_ms": 1217.2626500105252,
+      "p95_latency_ms": 3106.0364700024365,
+      "p99_latency_ms": 3202.498957015344,
+      "min_latency_ms": 214.98609997797757,
+      "max_latency_ms": 3741.9654999976046,
+      "std_latency_ms": 920.07793397284,
+      "throughput_rps": 0.6742839126758159
+    },
+    "by_time_window": {
+      "10s": {
+        "mean_latency_ms": 1506.1212676484822,
+        "median_latency_ms": 1309.375650002039,
+        "p95_latency_ms": 2963.546585004951,
+        "fallback_rate": 0.0,
+        "count": 34
+      },
+      "30s": {
+        "mean_latency_ms": 1422.5353757589774,
+        "median_latency_ms": 1252.1430000197142,
+        "p95_latency_ms": 3146.722100005718,
+        "fallback_rate": 0.0,
+        "count": 33
+      },
+      "1min": {
+        "mean_latency_ms": 1519.8088030297324,
+        "median_latency_ms": 1155.9705999970902,
+        "p95_latency_ms": 2995.7253000000487,
+        "fallback_rate": 0.0,
+        "count": 33
+      }
+    },
+    "model_types_used": {
+      "transformer": 100
+    }
+  },
+  "predict_batch": {
+    "mean_latency_ms": 3013.274924001307,
+    "median_latency_ms": 2912.4628999998095,
+    "p95_latency_ms": 5177.9574200176285,
+    "p99_latency_ms": 5686.440627998963,
+    "avg_per_item_ms": 527.1205726444365,
+    "throughput_rps": 1.8970991683804745,
+    "avg_successful": 5.7,
+    "avg_failed": 0.0
+  },
+  "anomaly_detect": {
+    "overall": {
+      "mean_latency_ms": 3522.1830199996475,
+      "median_latency_ms": 3018.0616000143345,
+      "p95_latency_ms": 6845.313569996504,
+      "p99_latency_ms": 8019.2930339835575,
+      "avg_anomalies_found": 25.6,
+      "throughput_rps": 0.2839148318874412
+    },
+    "by_time_window": {
+      "10s": {
+        "mean_latency_ms": 4213.553459994728,
+        "avg_anomalies": 29.8,
+        "count": 5
+      },
+      "30s": {
+        "mean_latency_ms": 3658.4223000041675,
+        "avg_anomalies": 29.2,
+        "count": 5
+      },
+      "1min": {
+        "mean_latency_ms": 2694.5733000000473,
+        "avg_anomalies": 17.8,
+        "count": 5
+      }
+    }
+  },
+  "ws_predict": {
+    "mean_latency_ms": 610.1290779991541,
+    "median_latency_ms": 605.3662499907659,
+    "p95_latency_ms": 647.3642850134638,
+    "p99_latency_ms": 662.4495249980828,
+    "throughput_mps": 1.638997445064217
+  },
+  "time_window_status": {
+    "10s": {
+      "model_status": "fully_loaded",
+      "transformer_loaded": true,
+      "lstm_loaded": true,
+      "tokenizer_loaded": true
+    },
+    "30s": {
+      "model_status": "fully_loaded",
+      "transformer_loaded": true,
+      "lstm_loaded": true,
+      "tokenizer_loaded": true
+    },
+    "1min": {
+      "model_status": "fully_loaded",
+      "transformer_loaded": true,
+      "lstm_loaded": true,
+      "tokenizer_loaded": true
+    }
+  },
+  "model_reload": {
+    "mean_reload_time_ms": 425.45376666627516,
+    "success_rate": 1.0
+  },
+  "pcap_upload": {
+    "mean_processing_time_ms": 122328.87288000202,
+    "median_processing_time_ms": 124827.14130001841,
+    "avg_throughput_mbps": 137.62869840247512,
+    "total_flows": "616156",
+    "total_packets": "5000000",
+    "avg_file_size_mb": 2009.2741344451904
+  }
+}

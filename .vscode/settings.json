@@ -1,0 +1,10 @@
+{
+    "python.analysis.extraPaths": [
+        "./code"
+    ],
+    "python.autoComplete.extraPaths": [
+        "./code"
+    ],
+    "notebook.output.textLineLimit": 70,
+    "notebook.output.scrolling": true
+}

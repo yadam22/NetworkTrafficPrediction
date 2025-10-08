@@ -1,0 +1,26 @@
+{
+  "all_configs": {
+    "config_1_seq8_h2": {
+      "seq_len": 8,
+      "horizon": 2,
+      "stride": 1
+    },
+    "config_2_seq6_h2": {
+      "seq_len": 6,
+      "horizon": 2,
+      "stride": 1
+    },
+    "config_3_seq4_h1": {
+      "seq_len": 4,
+      "horizon": 1,
+      "stride": 1
+    }
+  },
+  "sequence_counts": {
+    "config_1_seq8_h2": 124,
+    "config_2_seq6_h2": 126,
+    "config_3_seq4_h1": 129
+  },
+  "best_config": "config_3_seq4_h1",
+  "total_sequences": 379
+}

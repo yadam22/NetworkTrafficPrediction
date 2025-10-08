@@ -1,0 +1,113 @@
+py api\monitoring\performance.py
+
+============================================================
+GENERATING COMPREHENSIVE MONITORING REPORT
+============================================================
+
+============================================================
+METRICS COLLECTION PERFORMANCE ANALYSIS
+============================================================
+API Up: Yes
+Prometheus Up: Yes
+Node Exporter Up: Yes
+API Scrape Duration: 2.93ms
+Node Scrape Duration: 17.45ms
+Symbol Table Size: 4.41 KB
+Sample Ingestion Rate: 261.28 samples/sec
+Storage Size: 244.26 MB
+Prometheus Memory Usage: 117.39 MB
+Total API Requests: 1.00
+Total Predictions: 27577.00
+API Request Rate: 0.00
+
+============================================================
+DASHBOARD RENDERING PERFORMANCE
+============================================================
+API Request Count: 2.65ms for 1038 data points
+Request Duration: 10.35ms for 12552 data points
+Predictions Count: 3.51ms for 40 data points
+CPU Usage: 3.00ms for 479 data points
+Packet Rate: 2.54ms for 479 data points
+Anomaly Score: 2.51ms for 479 data points
+
+============================================================
+MONITORING STACK RESOURCE CONSUMPTION
+============================================================
+Prometheus CPU: 0.21%
+Prometheus Memory: 117.39 MB
+Api CPU: 0.10%
+Api Memory: 1340.33 MB
+Node-exporter CPU: 0.24%
+Node-exporter Memory: 17.70 MB
+Grafana: Running (metrics not exposed)
+
+Total Monitoring Stack:
+  CPU: 0.55%
+  Memory: 1475.43 MB
+
+Report saved to api\monitoring\monitoring_performance_report.json
+Visualization saved to api\monitoring\monitoring_performance.png
+
+============================================================
+LOAD TEST WITH METRICS MONITORING
+============================================================
+Collecting baseline metrics...
+
+============================================================
+METRICS COLLECTION PERFORMANCE ANALYSIS
+============================================================
+API Up: Yes
+Prometheus Up: Yes
+Node Exporter Up: Yes
+API Scrape Duration: 3.03ms
+Node Scrape Duration: 18.02ms
+Symbol Table Size: 4.41 KB
+Sample Ingestion Rate: 262.18 samples/sec
+Storage Size: 244.26 MB
+Prometheus Memory Usage: 118.14 MB
+Total API Requests: 1.00
+Total Predictions: 27577.00
+API Request Rate: 0.00
+
+Running load test for 30 seconds...
+  Sent 14200 requests...
+Total requests sent: 14200
+
+Collecting post-load metrics...
+
+============================================================
+METRICS COLLECTION PERFORMANCE ANALYSIS
+============================================================
+API Up: Yes
+Prometheus Up: Yes
+Node Exporter Up: Yes
+API Scrape Duration: 3.17ms
+Node Scrape Duration: 18.65ms
+Symbol Table Size: 4.41 KB
+Sample Ingestion Rate: 262.17 samples/sec
+Storage Size: 244.26 MB
+Prometheus Memory Usage: 118.64 MB
+Total API Requests: 1.00
+Total Predictions: 41777.00
+API Request Rate: 0.00
+
+========================================
+METRICS COLLECTION OVERHEAD UNDER LOAD
+========================================
+api_up: 0.00% increase
+prometheus_up: 0.00% increase
+node_exporter_up: 0.00% increase
+api_scrape_duration_ms: 4.63% increase
+node_scrape_duration_ms: 3.45% increase
+active_series_bytes: 0.00% increase
+ingestion_rate: -0.01% increase
+storage_mb: 0.00% increase
+memory_mb: 0.42% increase
+total_api_requests: 0.00% increase
+total_predictions: 51.49% increase
+
+Key Findings:
+  - Components Running: 4
+  - Total CPU Usage: 0.55%
+  - Total Memory: 1475.43 MB
+  - Metrics Ingestion: 261.28 samples/sec

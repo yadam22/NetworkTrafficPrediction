@@ -1,0 +1,117 @@
+{
+  "dashboard": {
+    "id": null,
+    "uid": "network-traffic-main",
+    "title": "Network Traffic Prediction System",
+    "tags": ["network", "ai", "monitoring"],
+    "timezone": "browser",
+    "schemaVersion": 38,
+    "version": 1,
+    "refresh": "10s",
+    "panels": [
+      {
+        "id": 1,
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+        "type": "graph",
+        "title": "Prediction Latency",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(prediction_latency_seconds_bucket[5m]))",
+            "legendFormat": "p95"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(prediction_latency_seconds_bucket[5m]))",
+            "legendFormat": "p99"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+        "type": "graph",
+        "title": "Network Traffic Volume",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "sum(network_traffic_volume_bytes) by (direction)",
+            "legendFormat": "{{direction}}"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "gridPos": {"h": 8, "w": 8, "x": 0, "y": 8},
+        "type": "singlestat",
+        "title": "Current Anomaly Score",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "max(network_anomaly_score)"
+          }
+        ],
+        "thresholds": "0.5,0.8",
+        "colors": ["green", "yellow", "red"]
+      },
+      {
+        "id": 4,
+        "gridPos": {"h": 8, "w": 8, "x": 8, "y": 8},
+        "type": "graph",
+        "title": "API Request Rate",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "rate(api_requests_total[1m])",
+            "legendFormat": "{{method}} {{endpoint}}"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "gridPos": {"h": 8, "w": 8, "x": 16, "y": 8},
+        "type": "graph",
+        "title": "System Resources",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "system_cpu_usage_percent",
+            "legendFormat": "CPU %"
+          },
+          {
+            "expr": "(system_memory_usage_bytes{type=\"used\"} / 1024 / 1024 / 1024)",
+            "legendFormat": "Memory GB"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16},
+        "type": "graph",
+        "title": "Model Performance",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "model_accuracy",
+            "legendFormat": "{{model_type}}"
+          },
+          {
+            "expr": "model_loss",
+            "legendFormat": "Loss {{model_type}}"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16},
+        "type": "table",
+        "title": "Alert Status",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "ALERTS{alertstate=\"firing\"}"
+          }
+        ]
+      }
+    ]
+  }
+}

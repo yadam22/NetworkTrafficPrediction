@@ -1,0 +1,380 @@
+{
+  "config": {
+    "max_packets_per_file": 5000000,
+    "max_memory_mb": 8192,
+    "time_windows": [
+      "10s",
+      "30s",
+      "1min"
+    ],
+    "normalization_method": "robust"
+  },
+  "global_stats": {
+    "total_packets": 100000000,
+    "total_flows": 9862305,
+    "total_bytes": 0,
+    "files_processed": 20,
+    "dirA_files": 15,
+    "dirB_files": 5,
+    "time_gaps": []
+  },
+  "file_stats": {
+    "equinix-nyc.dirA.20190117-125910.UTC.anon.pcap": {
+      "flows": 455648,
+      "packets": 5000000,
+      "bytes": "217998556",
+      "time_span": 371.75270819664,
+      "min_timestamp": 1756831120.769167,
+      "max_timestamp": 1756831492.5218751,
+      "direction": "A"
+    },
+    "equinix-nyc.dirA.20190117-130000.UTC.anon.pcap": {
+      "flows": 472847,
+      "packets": 5000000,
+      "bytes": "217625496",
+      "time_span": 361.7699213027954,
+      "min_timestamp": 1756831498.600783,
+      "max_timestamp": 1756831860.3707044,
+      "direction": "A"
+    },
+    "equinix-nyc.dirA.20190117-130100.UTC.anon.pcap": {
+      "flows": 480773,
+      "packets": 5000000,
+      "bytes": "218005240",
+      "time_span": 359.79291462898254,
+      "min_timestamp": 1756831866.5901184,
+      "max_timestamp": 1756832226.383033,
+      "direction": "A"
+    },
+    "equinix-nyc.dirA.20190117-130200.UTC.anon.pcap": {
+      "flows": 459180,
+      "packets": 5000000,
+      "bytes": "219790624",
+      "time_span": 361.22412037849426,
+      "min_timestamp": 1756832232.6632388,
+      "max_timestamp": 1756832593.8873591,
+      "direction": "A"
+    },
+    "equinix-nyc.dirA.20190117-130400.UTC.anon.pcap": {
+      "flows": 458905,
+      "packets": 5000000,
+      "bytes": "218032404",
+      "time_span": 359.5572519302368,
+      "min_timestamp": 1756832599.8741522,
+      "max_timestamp": 1756832959.431404,
+      "direction": "A"
+    },
+    "equinix-nyc.dirA.20190117-130500.UTC.anon.pcap": {
+      "flows": 440508,
+      "packets": 5000000,
+      "bytes": "214148728",
+      "time_span": 355.94137048721313,
+      "min_timestamp": 1756832965.3350334,
+      "max_timestamp": 1756833321.276404,
+      "direction": "A"
+    },
+    "equinix-nyc.dirA.20190117-130600.UTC.anon.pcap": {
+      "flows": 453805,
+      "packets": 5000000,
+      "bytes": "213075988",
+      "time_span": 357.83788681030273,
+      "min_timestamp": 1756833326.9851944,
+      "max_timestamp": 1756833684.8230813,
+      "direction": "A"
+    },
+    "equinix-nyc.dirA.20190117-130700.UTC.anon.pcap": {
+      "flows": 441744,
+      "packets": 5000000,
+      "bytes": "213645760",
+      "time_span": 361.0233504772186,
+      "min_timestamp": 1756833690.7300773,
+      "max_timestamp": 1756834051.7534277,
+      "direction": "A"
+    },
+    "equinix-nyc.dirA.20190117-130800.UTC.anon.pcap": {
+      "flows": 460539,
+      "packets": 5000000,
+      "bytes": "212639060",
+      "time_span": 356.88735604286194,
+      "min_timestamp": 1756834057.4566662,
+      "max_timestamp": 1756834414.3440223,
+      "direction": "A"
+    },
+    "equinix-nyc.dirA.20190117-130900.UTC.anon.pcap": {
+      "flows": 441195,
+      "packets": 5000000,
+      "bytes": "214322644",
+      "time_span": 358.76742696762085,
+      "min_timestamp": 1756834420.369352,
+      "max_timestamp": 1756834779.136779,
+      "direction": "A"
+    },
+    "equinix-nyc.dirA.20190117-131000.UTC.anon.pcap": {
+      "flows": 508837,
+      "packets": 5000000,
+      "bytes": "212713352",
+      "time_span": 359.6394877433777,
+      "min_timestamp": 1756834784.6958883,
+      "max_timestamp": 1756835144.335376,
+      "direction": "A"
+    },
+    "equinix-nyc.dirA.20190117-131100.UTC.anon.pcap": {
+      "flows": 478004,
+      "packets": 5000000,
+      "bytes": "212591300",
+      "time_span": 358.6731894016266,
+      "min_timestamp": 1756835150.5521433,
+      "max_timestamp": 1756835509.2253327,
+      "direction": "A"
+    },
+    "equinix-nyc.dirA.20190117-131200.UTC.anon.pcap": {
+      "flows": 442692,
+      "packets": 5000000,
+      "bytes": "213768268",
+      "time_span": 359.3369781970978,
+      "min_timestamp": 1756835515.2206123,
+      "max_timestamp": 1756835874.5575905,
+      "direction": "A"
+    },
+    "equinix-nyc.dirA.20190117-131300.UTC.anon.pcap": {
+      "flows": 439146,
+      "packets": 5000000,
+      "bytes": "215030548",
+      "time_span": 361.29463362693787,
+      "min_timestamp": 1756835880.2752492,
+      "max_timestamp": 1756836241.5698829,
+      "direction": "A"
+    },
+    "equinix-nyc.dirA.20190117-135400.UTC.anon.pcap": {
+      "flows": 450838,
+      "packets": 5000000,
+      "bytes": "218257168",
+      "time_span": 361.87947368621826,
+      "min_timestamp": 1756836247.1351879,
+      "max_timestamp": 1756836609.0146616,
+      "direction": "A"
+    },
+    "equinix-nyc.dirB.20190117-131800.UTC.anon.pcap": {
+      "flows": 608933,
+      "packets": 5000000,
+      "bytes": "216712024",
+      "time_span": 401.64687490463257,
+      "min_timestamp": 1756836614.706685,
+      "max_timestamp": 1756837016.35356,
+      "direction": "B"
+    },
+    "equinix-nyc.dirB.20190117-132000.UTC.anon.pcap": {
+      "flows": 611591,
+      "packets": 5000000,
+      "bytes": "216195624",
+      "time_span": 402.72043466567993,
+      "min_timestamp": 1756837024.9315972,
+      "max_timestamp": 1756837427.652032,
+      "direction": "B"
+    },
+    "equinix-nyc.dirB.20190117-132500.UTC.anon.pcap": {
+      "flows": 602659,
+      "packets": 5000000,
+      "bytes": "216001836",
+      "time_span": 403.8833236694336,
+      "min_timestamp": 1756837436.4845283,
+      "max_timestamp": 1756837840.367852,
+      "direction": "B"
+    },
+    "equinix-nyc.dirB.20190117-134600.UTC.anon.pcap": {
+      "flows": 590194,
+      "packets": 5000000,
+      "bytes": "217372872",
+      "time_span": 403.3527133464813,
+      "min_timestamp": 1756837848.8116293,
+      "max_timestamp": 1756838252.1643426,
+      "direction": "B"
+    },
+    "equinix-nyc.dirB.20190117-140000.UTC.anon.pcap": {
+      "flows": 564267,
+      "packets": 5000000,
+      "bytes": "213190660",
+      "time_span": 397.0090136528015,
+      "min_timestamp": 1756838260.5367599,
+      "max_timestamp": 1756838657.5457735,
+      "direction": "B"
+    }
+  },
+  "processed_windows": {
+    "10s": {
+      "n_samples": 754,
+      "n_sequences": 2242,
+      "n_configs": 3,
+      "best_config": "config_3_seq4_h1",
+      "max_sequences_per_config": 750,
+      "sequence_shape": [
+        750,
+        4,
+        21
+      ],
+      "label_shape": [
+        750,
+        1,
+        2
+      ],
+      "configs": [
+        {
+          "seq_len": 8,
+          "horizon": 2,
+          "stride": 1
+        },
+        {
+          "seq_len": 6,
+          "horizon": 2,
+          "stride": 1
+        },
+        {
+          "seq_len": 4,
+          "horizon": 1,
+          "stride": 1
+        }
+      ],
+      "feature_names": [
+        "packet_count_sum",
+        "packet_count_mean",
+        "packet_count_max",
+        "total_bytes_sum",
+        "total_bytes_mean",
+        "mean_packet_size_mean",
+        "packet_rate_mean",
+        "byte_rate_mean",
+        "flow_id_nunique",
+        "src_ip_nunique",
+        "dst_ip_nunique",
+        "time_since_start",
+        "hour_sin",
+        "hour_cos",
+        "packets_per_flow",
+        "packet_count_sum_ma2",
+        "packet_count_sum_diff",
+        "packet_count_sum_lag1",
+        "total_bytes_sum_ma2",
+        "total_bytes_sum_diff",
+        "total_bytes_sum_lag1"
+      ]
+    },
+    "30s": {
+      "n_samples": 252,
+      "n_sequences": 736,
+      "n_configs": 3,
+      "best_config": "config_3_seq4_h1",
+      "max_sequences_per_config": 248,
+      "sequence_shape": [
+        248,
+        4,
+        21
+      ],
+      "label_shape": [
+        248,
+        1,
+        2
+      ],
+      "configs": [
+        {
+          "seq_len": 8,
+          "horizon": 2,
+          "stride": 1
+        },
+        {
+          "seq_len": 6,
+          "horizon": 2,
+          "stride": 1
+        },
+        {
+          "seq_len": 4,
+          "horizon": 1,
+          "stride": 1
+        }
+      ],
+      "feature_names": [
+        "packet_count_sum",
+        "packet_count_mean",
+        "packet_count_max",
+        "total_bytes_sum",
+        "total_bytes_mean",
+        "mean_packet_size_mean",
+        "packet_rate_mean",
+        "byte_rate_mean",
+        "flow_id_nunique",
+        "src_ip_nunique",
+        "dst_ip_nunique",
+        "time_since_start",
+        "hour_sin",
+        "hour_cos",
+        "packets_per_flow",
+        "packet_count_sum_ma2",
+        "packet_count_sum_diff",
+        "packet_count_sum_lag1",
+        "total_bytes_sum_ma2",
+        "total_bytes_sum_diff",
+        "total_bytes_sum_lag1"
+      ]
+    },
+    "1min": {
+      "n_samples": 127,
+      "n_sequences": 361,
+      "n_configs": 3,
+      "best_config": "config_3_seq4_h1",
+      "max_sequences_per_config": 123,
+      "sequence_shape": [
+        123,
+        4,
+        21
+      ],
+      "label_shape": [
+        123,
+        1,
+        2
+      ],
+      "configs": [
+        {
+          "seq_len": 8,
+          "horizon": 2,
+          "stride": 1
+        },
+        {
+          "seq_len": 6,
+          "horizon": 2,
+          "stride": 1
+        },
+        {
+          "seq_len": 4,
+          "horizon": 1,
+          "stride": 1
+        }
+      ],
+      "feature_names": [
+        "packet_count_sum",
+        "packet_count_mean",
+        "packet_count_max",
+        "total_bytes_sum",
+        "total_bytes_mean",
+        "mean_packet_size_mean",
+        "packet_rate_mean",
+        "byte_rate_mean",
+        "flow_id_nunique",
+        "src_ip_nunique",
+        "dst_ip_nunique",
+        "time_since_start",
+        "hour_sin",
+        "hour_cos",
+        "packets_per_flow",
+        "packet_count_sum_ma2",
+        "packet_count_sum_diff",
+        "packet_count_sum_lag1",
+        "total_bytes_sum_ma2",
+        "total_bytes_sum_diff",
+        "total_bytes_sum_lag1"
+      ]
+    }
+  },
+  "timestamp": "2025-09-02T18:45:36.240698",
+  "total_files_found": 20,
+  "flow_files_used": 20,
+  "existing_flows_reused": false
+}

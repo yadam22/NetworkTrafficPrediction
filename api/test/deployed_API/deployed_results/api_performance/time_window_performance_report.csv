@@ -1,0 +1,5 @@
+time_window,generated_at,model_status,transformer_loaded,lstm_loaded,tokenizer_loaded,predict_mean_latency_ms,predict_median_latency_ms,predict_p95_latency_ms,predict_fallback_rate,predict_request_count,anomaly_mean_latency_ms,anomaly_avg_anomalies_found,anomaly_request_count,predict_p99_latency_ms,predict_min_latency_ms,predict_max_latency_ms,predict_std_latency_ms,predict_throughput_rps,pcap_mean_processing_ms,pcap_median_processing_ms,pcap_p95_processing_ms,pcap_avg_flows,pcap_avg_packets,pcap_avg_throughput_mbps
+10s,2025-09-05 01:32:45.136265,fully_loaded,True,True,True,4114.34,2794.11,9903.77,0.00,34.00,9952.41,34.00,5.00,,,,,,,,,,,
+30s,2025-09-05 01:32:45.137270,fully_loaded,True,True,True,5212.38,4544.03,9368.83,0.00,33.00,9577.04,43.80,5.00,,,,,,,,,,,
+1min,2025-09-05 01:32:45.137270,fully_loaded,True,True,True,6502.15,7010.40,11420.58,0.00,33.00,10582.24,0.00,5.00,,,,,,,,,,,
+OVERALL,2025-09-05 01:32:45.137270,,,,,5264.67,4276.26,10883.68,,,,,,13079.36,909.11,13386.14,3324.25,0.19,121158.37,120763.08,122439.16,65700.00,447104.00,1.69

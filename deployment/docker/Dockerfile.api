@@ -1,0 +1,74 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    libopenblas0 \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+RUN pip install --no-cache-dir \
+    fastapi==0.104.1 \
+    uvicorn[standard]==0.24.0 \
+    python-multipart==0.0.6 \
+    gunicorn==21.2.0 \
+    prometheus-client==0.19.0 \
+    python-dotenv==1.0.0
+
+COPY api/ /app/api/
+COPY code/src /app/code/src
+
+COPY code/data/llm/checkpoints /app/code/data/llm/checkpoints
+COPY code/data/baseline_results /app/code/data/baseline_results
+COPY code/data/tokenized_data/*.pkl /app/code/data/tokenized_data/
+
+RUN mkdir -p /app/code/data/llm/checkpoints/efficient_ft/10s \
+             /app/code/data/llm/checkpoints/efficient_ft/30s \
+             /app/code/data/llm/checkpoints/efficient_ft/1min \
+             /app/code/data/baseline_results/10s \
+             /app/code/data/baseline_results/30s \
+             /app/code/data/baseline_results/1min \
+             /app/code/data/tokenized_data \
+             /app/logs /app/cache /app/uploads \
+             /tmp/prometheus_multiproc
+
+# Set environment variables for all time windows
+ENV PYTHONUNBUFFERED=1 \
+    API_WORKERS=1 \
+    API_PORT=8000 \
+    PYTHONPATH=/app \
+    PROMETHEUS_MULTIPROC_DIR=/tmp/prometheus_multiproc \
+    MODEL_OPTIONAL=true \
+
+    TRANSFORMER_10S_PATH=/app/code/data/llm/checkpoints/efficient_ft/10s/best_model.pt \
+    TRANSFORMER_30S_PATH=/app/code/data/llm/checkpoints/efficient_ft/30s/best_model.pt \
+    TRANSFORMER_1MIN_PATH=/app/code/data/llm/checkpoints/efficient_ft/1min/best_model.pt \
+
+    LSTM_10S_PATH=/app/code/data/baseline_results/10s/lstm_model.pt \
+    LSTM_30S_PATH=/app/code/data/baseline_results/30s/lstm_model.pt \
+    LSTM_1MIN_PATH=/app/code/data/baseline_results/1min/lstm_model.pt \
+
+    TOKENIZER_10S_PATH=/app/code/data/tokenized_data/tokenizer_10s.pkl \
+    TOKENIZER_30S_PATH=/app/code/data/tokenized_data/tokenizer_30s.pkl \
+    TOKENIZER_1MIN_PATH=/app/code/data/tokenized_data/tokenizer_1min.pkl
+
+RUN useradd -m appuser && \
+    chown -R appuser:appuser /app && \
+    chown -R appuser:appuser /tmp/prometheus_multiproc
+
+USER appuser
+EXPOSE ${API_PORT}
+
+CMD ["gunicorn", "api.main:app", \
+     "--workers", "1", \
+     "--worker-class", "uvicorn.workers.UvicornWorker", \
+     "--bind", "0.0.0.0:8000", \
+     "--timeout", "300", \
+     "--graceful-timeout", "300", \
+     "--keep-alive", "5", \
+     "--max-requests", "1000", \
+     "--max-requests-jitter", "50", \
+     "--log-level", "info"]

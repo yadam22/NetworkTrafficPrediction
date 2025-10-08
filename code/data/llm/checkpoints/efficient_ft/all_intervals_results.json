@@ -1,0 +1,110 @@
+{
+  "10s": {
+    "time_interval": "10s",
+    "total_samples": 754,
+    "train_samples": 603,
+    "val_samples": 151,
+    "final_metrics": {
+      "train_loss": 0.0010717779284612717,
+      "val_loss": 9.345119469799102e-05,
+      "val_mse": 9.322040568804368e-05,
+      "val_mae": 0.008031071163713932,
+      "best_val_mae": 0.007429398596286774
+    },
+    "param_stats": {
+      "lora": 933888,
+      "adapter": 1190016,
+      "heads": 5395740,
+      "other": 0,
+      "total": 7519644
+    },
+    "training_config": {
+      "batch_size": 16,
+      "num_epochs": 10,
+      "learning_rate": 5e-05,
+      "warmup_ratio": 0.2,
+      "gradient_checkpointing": true,
+      "mixed_precision": true,
+      "task": "traffic_prediction",
+      "checkpoint_dir": "code/data/llm/checkpoints/efficient_ft/10s",
+      "eval_steps": 25,
+      "logging_steps": 10,
+      "use_wandb": false,
+      "weight_decay": 0.01,
+      "gradient_clip": 1.0,
+      "time_interval": "10s"
+    }
+  },
+  "30s": {
+    "time_interval": "30s",
+    "total_samples": 252,
+    "train_samples": 201,
+    "val_samples": 51,
+    "final_metrics": {
+      "train_loss": 0.0010045234454222596,
+      "val_loss": 4.380778955237474e-05,
+      "val_mse": 4.330085721448995e-05,
+      "val_mae": 0.005503877531737089,
+      "best_val_mae": 0.0053365640342235565
+    },
+    "param_stats": {
+      "lora": 933888,
+      "adapter": 1190016,
+      "heads": 5395740,
+      "other": 0,
+      "total": 7519644
+    },
+    "training_config": {
+      "batch_size": 16,
+      "num_epochs": 10,
+      "learning_rate": 5e-05,
+      "warmup_ratio": 0.2,
+      "gradient_checkpointing": true,
+      "mixed_precision": true,
+      "task": "traffic_prediction",
+      "checkpoint_dir": "code/data/llm/checkpoints/efficient_ft/30s",
+      "eval_steps": 25,
+      "logging_steps": 10,
+      "use_wandb": false,
+      "weight_decay": 0.01,
+      "gradient_clip": 1.0,
+      "time_interval": "30s"
+    }
+  },
+  "1min": {
+    "time_interval": "1min",
+    "total_samples": 127,
+    "train_samples": 101,
+    "val_samples": 26,
+    "final_metrics": {
+      "train_loss": 0.0019195879410420144,
+      "val_loss": 5.8764864661497995e-05,
+      "val_mse": 6.065455454518087e-05,
+      "val_mae": 0.006086439825594425,
+      "best_val_mae": 0.006058993749320507
+    },
+    "param_stats": {
+      "lora": 933888,
+      "adapter": 1190016,
+      "heads": 5395740,
+      "other": 0,
+      "total": 7519644
+    },
+    "training_config": {
+      "batch_size": 16,
+      "num_epochs": 10,
+      "learning_rate": 5e-05,
+      "warmup_ratio": 0.2,
+      "gradient_checkpointing": true,
+      "mixed_precision": true,
+      "task": "traffic_prediction",
+      "checkpoint_dir": "code/data/llm/checkpoints/efficient_ft/1min",
+      "eval_steps": 25,
+      "logging_steps": 10,
+      "use_wandb": false,
+      "weight_decay": 0.01,
+      "gradient_clip": 1.0,
+      "time_interval": "1min"
+    }
+  }
+}

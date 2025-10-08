@@ -1,0 +1,8 @@
+{
+  "vae": {
+    "latent_dim": 32,
+    "final_loss": 0.6486761569976807,
+    "reconstruction_error": 0.5351863503456116,
+    "training_epochs": 50
+  }
+}

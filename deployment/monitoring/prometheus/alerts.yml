@@ -1,0 +1,88 @@
+groups:
+  - name: network_traffic_alerts
+    interval: 30s
+    rules:
+      # API alerts
+      - alert: APIDown
+        expr: up{job="network-traffic-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API is down"
+          description: "Network Traffic API has been down for more than 1 minute"
+
+      - alert: HighAPILatency
+        expr: histogram_quantile(0.95, rate(api_request_duration_seconds_bucket[5m])) > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High API latency"
+          description: "95th percentile API latency is above 2 seconds"
+
+      - alert: HighErrorRate
+        expr: rate(api_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High error rate"
+          description: "Error rate is above 5%"
+
+      # System alerts
+      - alert: HighCPUUsage
+        expr: system_cpu_usage_percent > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage"
+          description: "CPU usage is above 80%"
+
+      - alert: HighMemoryUsage
+        expr: (system_memory_usage_bytes{type="used"} / system_memory_usage_bytes{type="available"}) > 0.9
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage"
+          description: "Memory usage is above 90%"
+
+      # Network traffic alerts
+      - alert: HighAnomalyScore
+        expr: network_anomaly_score > 0.8
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High network anomaly detected"
+          description: "Network anomaly score is above 0.8"
+
+      - alert: TrafficSpike
+        expr: rate(network_packet_rate[1m]) > 10000
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Traffic spike detected"
+          description: "Packet rate exceeded 10k pps"
+
+      # Model alerts
+      - alert: LowModelAccuracy
+        expr: model_accuracy < 0.7
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Model accuracy degraded"
+          description: "Model accuracy is below 70%"
+
+      - alert: PredictionLatencyHigh
+        expr: histogram_quantile(0.99, rate(prediction_latency_seconds_bucket[5m])) > 5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High prediction latency"
+          description: "99th percentile prediction latency is above 5 seconds"

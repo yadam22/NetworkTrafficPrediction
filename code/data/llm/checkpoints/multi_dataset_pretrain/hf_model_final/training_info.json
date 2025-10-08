@@ -1,0 +1,45 @@
+{
+  "final_loss": 0.7686678634749519,
+  "total_epochs": 20,
+  "total_steps": 720,
+  "datasets": [
+    {
+      "name": "tokenized_data_10s",
+      "time_window": "10s",
+      "num_samples": 754
+    },
+    {
+      "name": "tokenized_data_30s",
+      "time_window": "30s",
+      "num_samples": 252
+    },
+    {
+      "name": "tokenized_data_1min",
+      "time_window": "1min",
+      "num_samples": 127
+    }
+  ],
+  "config": {
+    "batch_size": 32,
+    "num_epochs": 20,
+    "learning_rate": 5e-05,
+    "weight_decay": 0.01,
+    "num_workers": 4,
+    "checkpoint_dir": "code/data/llm/checkpoints/multi_dataset_pretrain",
+    "save_every": 2,
+    "eval_every": 1,
+    "log_every": 50,
+    "gradient_clip": 1.0,
+    "use_wandb": false,
+    "task": "pretrain",
+    "dataset_strategy": "sequential",
+    "dataset_weights": [
+      1.0,
+      1.5,
+      2.0
+    ],
+    "warmup_ratio": 0.1,
+    "resume_from_checkpoint": null,
+    "mixed_precision": true
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "time_interval": "30s",
+  "parameter_breakdown": {
+    "Total Model": 40614812,
+    "Frozen Base": 33095168,
+    "Trainable Total": 7519644,
+    "LoRA Adapters": 933888,
+    "Task Adapters": 1190016,
+    "Prediction Heads": 5395740,
+    "Other": 0
+  },
+  "parameter_percentages": {
+    "Total Model": 100.0,
+    "Frozen Base": 81.48546397309435,
+    "Trainable Total": 18.514536026905652,
+    "LoRA Adapters": 2.299377872289548,
+    "Task Adapters": 2.9300049449939594,
+    "Prediction Heads": 13.285153209622145,
+    "Other": 0.0
+  },
+  "training_metrics": {
+    "epochs": 5,
+    "final_train_loss": 0.0012183744200648596,
+    "final_val_loss": 5.938152116868878e-05,
+    "final_val_mse": 5.963186777080409e-05,
+    "final_val_mae": 0.0065068756230175495,
+    "best_val_loss": 5.938152116868878e-05,
+    "best_val_mse": 5.963186777080409e-05,
+    "best_val_mae": 0.006472518667578697,
+    "avg_memory_mb": 617.0507114955357,
+    "peak_memory_mb": 628.111328125
+  },
+  "inference_benchmark": {
+    "sparse_attention": {
+      "window_size": 512,
+      "avg_time_ms": 44.576058099846705,
+      "std_time_ms": 14.849538964557844,
+      "memory_mb": 400.75830078125,
+      "mae": 0.6576950550079346
+    }
+  },
+  "checkpoint_info": {
+    "checkpoint_dir": "code/data/llm/checkpoints/efficient_ft/30s",
+    "exists": true
+  }
+}

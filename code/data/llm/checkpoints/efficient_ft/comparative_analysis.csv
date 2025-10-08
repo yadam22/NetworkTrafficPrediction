@@ -1,0 +1,4 @@
+Time Interval,Epochs,Best Val MAE,Final Val Loss,Trainable Params,LoRA Params,Inference Time (ms),Memory Usage (MB),Peak Memory (MB)
+10s,4,0.0086,0.0002,"7,519,644","933,888",15.82,215,473
+30s,5,0.0065,0.0001,"7,519,644","933,888",44.58,401,628
+1min,7,0.0066,0.0001,"7,519,644","933,888",13.91,587,629

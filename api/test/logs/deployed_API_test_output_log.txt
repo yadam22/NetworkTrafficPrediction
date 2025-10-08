@@ -1,0 +1,167 @@
+py api\test\deployed_API\test_deployed_api_performance.py
+API Performance Testing - DEPLOYED VERSION
+Testing API at: https://network-traffic-api-845421504867.europe-west1.run.app
+============================================================
+
+ Warming up API 
+Available time windows: ['10s', '1min', '30s']
+Warmup complete
+
+ Testing time window information endpoints 
+Time windows available: ['10s', '1min', '30s']
+  10s: fully_loaded
+  30s: fully_loaded
+  1min: fully_loaded
+
+ Testing prediction endpoints with time windows 
+  Completed 0/100 requests
+  Completed 20/100 requests
+  Completed 40/100 requests
+  Completed 60/100 requests
+  Completed 80/100 requests
+
+ Testing batch prediction with mixed time windows
+  Completed 0/50 batch requests
+  Completed 10/50 batch requests
+  Completed 20/50 batch requests
+  Completed 30/50 batch requests
+  Completed 40/50 batch requests
+
+ Testing anomaly detection with time windows
+
+ Testing WebSocket streaming with time windows
+  Completed 0/50 WebSocket messages
+  Completed 10/50 WebSocket messages
+  Completed 20/50 WebSocket messages
+  Completed 30/50 WebSocket messages
+  Completed 40/50 WebSocket messages
+
+ Testing PCAP deployed endpoint (pre-generated 25MB file)
+  Iteration 1/5: Processed in 120763.08ms, 65700 flows
+  Iteration 2/5: Processed in 122664.82ms, 65700 flows
+  Iteration 3/5: Processed in 120754.22ms, 65700 flows
+  Iteration 4/5: Processed in 120073.20ms, 65700 flows
+  Iteration 5/5: Processed in 121536.52ms, 65700 flows
+
+ Testing model reload endpoints
+  Model reload for 10s: success
+  Model reload for 30s: success
+  Model reload for 1min: success
+
+ Analyzing results and generating reports
+Saved predict results to api\test\deployed_API\deployed_results\api_performance\predict_results.csv
+Saved predict_batch results to api\test\deployed_API\deployed_results\api_performance\predict_batch_results.csv
+Saved anomaly_detect results to api\test\deployed_API\deployed_results\api_performance\anomaly_detect_results.csv
+Saved ws_predict results to api\test\deployed_API\deployed_results\api_performance\ws_predict_results.csv
+Saved pcap_deployed results to api\test\deployed_API\deployed_results\api_performance\pcap_deployed_results.csv
+Saved time_window_info results to api\test\deployed_API\deployed_results\api_performance\time_window_info_results.csv
+Saved model_reload results to api\test\deployed_API\deployed_results\api_performance\model_reload_results.csv
+
+/predict Endpoint Overall:
+  mean_latency_ms: 5264.67
+  median_latency_ms: 4276.26
+  p95_latency_ms: 10883.68
+  p99_latency_ms: 13079.36
+  min_latency_ms: 909.11
+  max_latency_ms: 13386.14
+  std_latency_ms: 3324.25
+  throughput_rps: 0.19
+
+/predict By Time Window:
+  10s:
+    mean_latency_ms: 4114.34
+    median_latency_ms: 2794.11
+    p95_latency_ms: 9903.77
+    fallback_rate: 0.00
+    count: 34
+  30s:
+    mean_latency_ms: 5212.38
+    median_latency_ms: 4544.03
+    p95_latency_ms: 9368.83
+    fallback_rate: 0.00
+    count: 33
+  1min:
+    mean_latency_ms: 6502.15
+    median_latency_ms: 7010.40
+    p95_latency_ms: 11420.58
+    fallback_rate: 0.00
+    count: 33
+
+/predict/batch Endpoint:
+  mean_latency_ms: 8846.45
+  median_latency_ms: 8219.21
+  p95_latency_ms: 15102.91
+  p99_latency_ms: 16472.57
+  avg_per_item_ms: 1587.10
+  throughput_rps: 0.63
+  avg_successful: 5.50
+  avg_failed: 0.00
+
+/anomaly/detect Endpoint:
+  mean_latency_ms: 10037.23
+  median_latency_ms: 10737.44
+  p95_latency_ms: 16366.46
+  p99_latency_ms: 16879.29
+  avg_anomalies_found: 25.93
+  throughput_rps: 0.10
+
+WebSocket /ws/predict:
+  mean_latency_ms: 1581.23
+  median_latency_ms: 1532.82
+  p95_latency_ms: 1912.54
+  p99_latency_ms: 2213.65
+  throughput_mps: 0.63
+
+/upload/pcap-deployed Endpoint:
+  File: equinix-nyc.dirA.20190117-130500.UTC.anon_25MB.pcap
+  File Size: 25.00 MB
+  Iterations: 5
+  mean_processing_time_ms: 121158.37
+  median_processing_time_ms: 120763.08
+  p95_processing_time_ms: 122439.16
+  min_processing_time_ms: 120073.20
+  max_processing_time_ms: 122664.82
+  avg_flows_extracted: 65700.00
+  avg_packets_processed: 447104.00
+  avg_unique_ips: 62951.00
+  avg_throughput_mbps: 1.69
+  Consistency (flows std): 0.00
+  All requests successful: True
+
+Time Window Status:
+  10s: {'model_status': 'fully_loaded', 'transformer_loaded': True, 'lstm_loaded': True, 'tokenizer_loaded': True}
+  30s: {'model_status': 'fully_loaded', 'transformer_loaded': True, 'lstm_loaded': True, 'tokenizer_loaded': True}
+  1min: {'model_status': 'fully_loaded', 'transformer_loaded': True, 'lstm_loaded': True, 'tokenizer_loaded': True}
+
+Model Reload:
+  mean_reload_time_ms: 663.62
+  success_rate: 1.00
+
+Saved time window performance report to api\test\deployed_API\deployed_results\api_performance\time_window_performance_report.csv
+
+Time Window Performance Summary:
+------------------------------------------------------------
+
+10s:
+  Model Status: fully_loaded
+  Mean Latency: 4114.34 ms
+  P95 Latency: 9903.77 ms
+  Fallback Rate: 0.0%
+  Request Count: 34
+
+30s:
+  Model Status: fully_loaded
+  Mean Latency: 5212.38 ms
+  P95 Latency: 9368.83 ms
+  Fallback Rate: 0.0%
+  Request Count: 33
+
+1min:
+  Model Status: fully_loaded
+  Mean Latency: 6502.15 ms
+  P95 Latency: 11420.58 ms
+  Fallback Rate: 0.0%
+  Request Count: 33
+
+============================================================
+Testing Complete

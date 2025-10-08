@@ -1,0 +1,36 @@
+{
+  "time_interval": "1min",
+  "total_samples": 127,
+  "train_samples": 101,
+  "val_samples": 26,
+  "final_metrics": {
+    "train_loss": 0.0019195879410420144,
+    "val_loss": 5.8764864661497995e-05,
+    "val_mse": 6.065455454518087e-05,
+    "val_mae": 0.006086439825594425,
+    "best_val_mae": 0.006058993749320507
+  },
+  "param_stats": {
+    "lora": 933888,
+    "adapter": 1190016,
+    "heads": 5395740,
+    "other": 0,
+    "total": 7519644
+  },
+  "training_config": {
+    "batch_size": 16,
+    "num_epochs": 10,
+    "learning_rate": 5e-05,
+    "warmup_ratio": 0.2,
+    "gradient_checkpointing": true,
+    "mixed_precision": true,
+    "task": "traffic_prediction",
+    "checkpoint_dir": "code/data/llm/checkpoints/efficient_ft/1min",
+    "eval_steps": 25,
+    "logging_steps": 10,
+    "use_wandb": false,
+    "weight_decay": 0.01,
+    "gradient_clip": 1.0,
+    "time_interval": "1min"
+  }
+}

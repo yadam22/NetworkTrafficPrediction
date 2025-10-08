@@ -1,0 +1,33 @@
+# For model training and experimentation
+
+FROM pytorch/pytorch:2.1.0-cuda12.1-cudnn8-runtime
+
+WORKDIR /workspace
+
+# Install additional dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    wget \
+    vim \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements
+COPY requirements.txt requirements-dev.txt ./
+RUN pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir -r requirements-dev.txt
+
+# Copy code
+COPY code/ /workspace/code/
+
+# Jupyter for experimentation
+RUN pip install jupyterlab
+
+# Environment
+ENV PYTHONUNBUFFERED=1 \
+    CUDA_VISIBLE_DEVICES=0
+
+# Ports for Jupyter and TensorBoard
+EXPOSE 8888 6006
+
+# Default: Jupyter Lab
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]

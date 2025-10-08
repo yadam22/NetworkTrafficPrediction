@@ -1,0 +1,5 @@
+endpoint,latency_ms,available_windows,fully_loaded,status_code,time_window,model_status,transformer_loaded,lstm_loaded,tokenizer_loaded
+/model/time-windows,86.48949998314492,"['10s', '1min', '30s']",3.0,200,,,,,
+/model/time-windows/10s,35.27819999726489,,,200,10s,fully_loaded,True,True,True
+/model/time-windows/30s,30.059400014579296,,,200,30s,fully_loaded,True,True,True
+/model/time-windows/1min,29.383900022367015,,,200,1min,fully_loaded,True,True,True

@@ -1,0 +1,6 @@
+iteration,filename,file_size_mb,processing_time_ms,flows_extracted,packets_processed,unique_ips,total_bytes,throughput_mbps,recommended_time_window,deployment_mode,data_type,status_code
+0,equinix-nyc.dirA.20190117-130500.UTC.anon_25MB.pcap,25.0,120763.07899999665,65700,447104,62951,19060712,1.6958825635772807,30s,deployed_test,real,200
+1,equinix-nyc.dirA.20190117-130500.UTC.anon_25MB.pcap,25.0,122664.81610000483,65700,447104,62951,19060712,1.66959040506801,30s,deployed_test,real,200
+2,equinix-nyc.dirA.20190117-130500.UTC.anon_25MB.pcap,25.0,120754.22269999399,65700,447104,62951,19060712,1.6960069422070008,30s,deployed_test,real,200
+3,equinix-nyc.dirA.20190117-130500.UTC.anon_25MB.pcap,25.0,120073.195999983,65700,447104,62951,19060712,1.7056262914833131,30s,deployed_test,real,200
+4,equinix-nyc.dirA.20190117-130500.UTC.anon_25MB.pcap,25.0,121536.51980002178,65700,447104,62951,19060712,1.6850902126947631,30s,deployed_test,real,200

@@ -1,0 +1,107 @@
+{
+  "vocab_stats": {
+    "total_tokens": 131,
+    "special_tokens": 14,
+    "token_types": {
+      "anomaly": 1,
+      "flow": 1,
+      "network": 1,
+      "temporal": 12,
+      "behavioral": 2,
+      "contextual": 100
+    },
+    "top_important_tokens": [
+      [
+        "ANOMALY_NONE",
+        11.06677897745504
+      ],
+      [
+        "FLOW_TINY_PACKETS_LOW_RATE_LOW_FLOWS_FEW",
+        7.1934063353457764
+      ],
+      [
+        "IP_DIVERSITY_LOW",
+        5.53338948872752
+      ],
+      [
+        "MICROSEC_0",
+        5.53338948872752
+      ],
+      [
+        "DAY_WEEKDAY",
+        5.53338948872752
+      ],
+      [
+        "WEEK_0",
+        5.53338948872752
+      ],
+      [
+        "SEASON_FALL",
+        5.53338948872752
+      ],
+      [
+        "DIVERSITY_LOW_TRANSFER_CONTROL",
+        5.529429087511423
+      ],
+      [
+        "HOUR_BUSINESS",
+        5.099866427824198
+      ],
+      [
+        "SEC_BLOCK_3",
+        4.844187086458591
+      ],
+      [
+        "SEC_BLOCK_0",
+        4.844187086458591
+      ],
+      [
+        "HOUR_EVENING",
+        4.499809670330265
+      ],
+      [
+        "MINUTE_Q2",
+        4.290459441148391
+      ],
+      [
+        "MINUTE_Q3",
+        4.110873864173311
+      ],
+      [
+        "MINUTE_Q0",
+        4.110873864173311
+      ],
+      [
+        "MINUTE_Q1",
+        4.110873864173311
+      ],
+      [
+        "packet_count_sum_C18",
+        3.8918202981106265
+      ],
+      [
+        "packet_count_sum_C9",
+        3.8501476017100584
+      ],
+      [
+        "total_bytes_sum_C14",
+        3.7135720667043075
+      ],
+      [
+        "packet_count_sum_C0",
+        3.6635616461296463
+      ]
+    ],
+    "frequency_stats": {
+      "mean": 34.46153846153846,
+      "std": 64.03958957965433,
+      "min": 1,
+      "max": 252,
+      "median": 11.0
+    }
+  },
+  "unique_tokens_used": 81,
+  "total_sequences": 252,
+  "avg_sequence_length": 17.0,
+  "window": "30s"
+}

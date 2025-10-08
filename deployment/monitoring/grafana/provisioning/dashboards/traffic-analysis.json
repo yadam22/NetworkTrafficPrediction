@@ -1,0 +1,55 @@
+{
+  "dashboard": {
+    "title": "Network Traffic Analysis",
+    "panels": [
+      {
+        "title": "Real-time Traffic Predictions",
+        "type": "timeseries",
+        "targets": [
+          {
+            "expr": "rate(predictions_total[1m])",
+            "legendFormat": "{{task}} - {{time_window}}"
+          }
+        ]
+      },
+      {
+        "title": "Protocol Distribution",
+        "type": "piechart",
+        "targets": [
+          {
+            "expr": "sum(network_flow_count) by (protocol)"
+          }
+        ]
+      },
+      {
+        "title": "Anomaly Detection Heatmap",
+        "type": "heatmap",
+        "targets": [
+          {
+            "expr": "network_anomaly_score"
+          }
+        ]
+      },
+      {
+        "title": "Cache Performance",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "(cache_hits_total / (cache_hits_total + cache_misses_total)) * 100",
+            "legendFormat": "Hit Rate %"
+          }
+        ]
+      },
+      {
+        "title": "PCAP Processing",
+        "type": "timeseries",
+        "targets": [
+          {
+            "expr": "rate(pcap_files_processed_total[5m])",
+            "legendFormat": "{{status}}"
+          }
+        ]
+      }
+    ]
+  }
+}

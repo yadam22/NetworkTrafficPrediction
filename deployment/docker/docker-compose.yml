@@ -1,0 +1,103 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: ../..
+      dockerfile: deployment/docker/Dockerfile.api
+    ports:
+      - "8000:8000"
+    environment:
+      # Core settings
+      - ENVIRONMENT=development
+      - LOG_LEVEL=info
+      - PYTHONPATH=/app
+
+      # Model paths
+      - MODEL_PATH=/app/models
+      - TRANSFORMER_MODEL_PATH=/app/models/llm/checkpoints/efficient_ft/best_model.pt
+      - LSTM_MODEL_PATH=/app/models/baseline_results/30s/lstm_model.pt
+      - TOKENIZER_PATH=/app/models/tokenizers/tokenizer_30s.pkl
+
+      # API settings
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - API_WORKERS=1
+
+      # Cache settings (using in-memory cache)
+      - CACHE_TYPE=memory
+      - CACHE_MAX_SIZE=1000
+
+      # GPU settings (optional)
+      - CUDA_VISIBLE_DEVICES=0
+
+    volumes:
+      # Code and API
+      - ../../code:/app/code:ro
+      - ../../api:/app/api:ro
+
+      # Model files
+      - ../../code/data/llm/checkpoints:/app/models/llm/checkpoints:ro
+      - ../../code/data/baseline_results:/app/models/baseline_results:ro
+      - ../../code/data/tokenized_data:/app/models/tokenizers:ro
+
+      # Temp directory for uploads (read-write)
+      - ./temp:/tmp/network_traffic_uploads
+
+    command:
+      [
+        "python",
+        "-m",
+        "uvicorn",
+        "api.main:app",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000",
+        "--reload",
+      ]
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+    networks:
+      - network-prediction
+
+    restart: unless-stopped
+
+  trainer:
+    build:
+      context: ../..
+      dockerfile: deployment/docker/Dockerfile.trainer
+    volumes:
+      - ../../code:/workspace/code
+      - ../../code/data:/workspace/data
+
+      # Cache for training
+      - trainer-cache:/root/.cache
+
+    ports:
+      - "8888:8888" # Jupyter
+      - "6006:6006" # TensorBoard
+
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - PYTHONPATH=/workspace
+      - JUPYTER_ENABLE_LAB=yes
+
+    networks:
+      - network-prediction
+
+    restart: unless-stopped
+
+networks:
+  network-prediction:
+    driver: bridge
+
+volumes:
+  trainer-cache:
+    driver: local

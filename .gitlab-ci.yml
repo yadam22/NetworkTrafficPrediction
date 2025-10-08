@@ -1,0 +1,98 @@
+stages:
+  - test
+  - build
+  - push
+  - deploy
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+  IMAGE_NAME: ${GCP_ARTIFACT_REGISTRY}/${GCP_PROJECT_ID}/${GCP_REPOSITORY_NAME}/network-traffic-api
+  PYTHON_VERSION: "3.9"
+
+# Cache dependencies
+cache:
+  paths:
+    - .cache/pip
+    - venv/
+
+before_script:
+  - echo "Starting CI/CD Pipeline"
+
+# Test Stage
+test:unit:
+  stage: test
+  image: python:3.9-slim
+  tags:
+    - docker
+  services:
+    - docker:dind
+  before_script:
+    - apt-get update && apt-get install -y gcc g++ make
+    - python -m venv venv
+    - source venv/bin/activate
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+    - pip install -r requirements-dev.txt
+  script:
+    - source venv/bin/activate
+    - export PYTHONPATH=$CI_PROJECT_DIR/code:$PYTHONPATH
+    - pytest code/tests/test_preprocessing.py -v --cov=code/src/data --cov-report=xml
+    - pytest code/tests/test_models.py -v --cov=code/src/models --cov-report=xml --cov-append
+    - pytest code/tests/test_training.py -v --cov=code/src --cov-report=xml --cov-append
+  coverage: '/TOTAL.*\s+(\d+%)$/'
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+    paths:
+      - coverage.xml
+    expire_in: 1 week
+  only:
+    refs:
+      - main
+    changes:
+      - code/src/data/tokenization.py
+      - code/src/data/preprocessing.py
+      - code/src/data/dimensionality_reduction.py
+      - code/src/models/baseline.py
+      - code/src/models/lora.py
+      - code/src/models/pretraining.py
+
+# Build Stage
+build-push:api:
+  stage: build
+  image: docker:latest
+  tags:
+    - docker
+  services:
+    - docker:dind
+  timeout: 3 hours
+  before_script:
+    - echo "Installing gcloud SDK..."
+    - apk add --no-cache python3 py3-pip bash curl
+    - curl -o google-cloud-sdk.tar.gz https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz
+    - tar -xzf google-cloud-sdk.tar.gz
+    - ./google-cloud-sdk/install.sh --quiet --path-update=false
+    - export PATH=$PATH:${PWD}/google-cloud-sdk/bin
+    - echo ${GCP_SERVICE_ACCOUNT_KEY} | base64 -d > ${HOME}/gcp-key.json
+    - gcloud auth activate-service-account --key-file ${HOME}/gcp-key.json
+    - gcloud config set project ${GCP_PROJECT_ID}
+    - gcloud auth configure-docker ${GCP_ARTIFACT_REGISTRY} --quiet
+  script:
+    - echo "Building Docker image..."
+    - docker build --no-cache -f deployment/docker/Dockerfile.api -t ${IMAGE_NAME}:${CI_COMMIT_SHA} .
+    - docker tag ${IMAGE_NAME}:${CI_COMMIT_SHA} ${IMAGE_NAME}:latest
+    - echo "Pushing to GCP Artifact Registry..."
+    - docker push ${IMAGE_NAME}:${CI_COMMIT_SHA}
+    - docker push ${IMAGE_NAME}:latest
+    - echo "Successfully pushed ${IMAGE_NAME}:${CI_COMMIT_SHA}"
+  only:
+    refs:
+      - main
+    changes:
+      - deployment/docker/Dockerfile.api
+      - api/**/*
+      - code/src/**/*
+      - requirements.txt

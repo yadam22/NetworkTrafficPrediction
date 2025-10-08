@@ -1,0 +1,101 @@
+{
+  "10s": {
+    "exists": true,
+    "parameter_breakdown": {
+      "Total Model": 40614812,
+      "Frozen Base": 33095168,
+      "Trainable Total": 7519644,
+      "LoRA Adapters": 933888,
+      "Task Adapters": 1190016,
+      "Prediction Heads": 5395740,
+      "Other": 0
+    },
+    "training_metrics": {
+      "epochs": 4,
+      "final_train_loss": 0.0016340453232834605,
+      "final_val_loss": 0.00015074118127813562,
+      "final_val_mse": 0.0001507268170826137,
+      "final_val_mae": 0.009853127412497997,
+      "best_val_loss": 0.0001123938309319783,
+      "best_val_mse": 0.00011246412032051012,
+      "best_val_mae": 0.008624562993645668,
+      "avg_memory_mb": 467.0653435202206,
+      "peak_memory_mb": 472.69970703125
+    },
+    "inference_benchmark": {
+      "sparse_attention": {
+        "window_size": 512,
+        "avg_time_ms": 15.817291000348632,
+        "std_time_ms": 4.286124880315633,
+        "memory_mb": 214.69775390625,
+        "mae": 0.6492149233818054
+      }
+    }
+  },
+  "30s": {
+    "exists": true,
+    "parameter_breakdown": {
+      "Total Model": 40614812,
+      "Frozen Base": 33095168,
+      "Trainable Total": 7519644,
+      "LoRA Adapters": 933888,
+      "Task Adapters": 1190016,
+      "Prediction Heads": 5395740,
+      "Other": 0
+    },
+    "training_metrics": {
+      "epochs": 5,
+      "final_train_loss": 0.0012183744200648596,
+      "final_val_loss": 5.938152116868878e-05,
+      "final_val_mse": 5.963186777080409e-05,
+      "final_val_mae": 0.0065068756230175495,
+      "best_val_loss": 5.938152116868878e-05,
+      "best_val_mse": 5.963186777080409e-05,
+      "best_val_mae": 0.006472518667578697,
+      "avg_memory_mb": 617.0507114955357,
+      "peak_memory_mb": 628.111328125
+    },
+    "inference_benchmark": {
+      "sparse_attention": {
+        "window_size": 512,
+        "avg_time_ms": 44.576058099846705,
+        "std_time_ms": 14.849538964557844,
+        "memory_mb": 400.75830078125,
+        "mae": 0.6576950550079346
+      }
+    }
+  },
+  "1min": {
+    "exists": true,
+    "parameter_breakdown": {
+      "Total Model": 40614812,
+      "Frozen Base": 33095168,
+      "Trainable Total": 7519644,
+      "LoRA Adapters": 933888,
+      "Task Adapters": 1190016,
+      "Prediction Heads": 5395740,
+      "Other": 0
+    },
+    "training_metrics": {
+      "epochs": 7,
+      "final_train_loss": 0.0021601917687803507,
+      "final_val_loss": 7.356312926276587e-05,
+      "final_val_mse": 7.61152186896652e-05,
+      "final_val_mae": 0.006616170052438974,
+      "best_val_loss": 7.356312926276587e-05,
+      "best_val_mse": 7.61152186896652e-05,
+      "best_val_mae": 0.006616170052438974,
+      "avg_memory_mb": 629.111328125,
+      "peak_memory_mb": 629.111328125
+    },
+    "inference_benchmark": {
+      "sparse_attention": {
+        "window_size": 512,
+        "avg_time_ms": 13.912850399356103,
+        "std_time_ms": 1.746995914108372,
+        "memory_mb": 586.81884765625,
+        "mae": 0.3964736759662628
+      }
+    }
+  }
+}
