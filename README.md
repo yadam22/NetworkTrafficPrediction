@@ -315,14 +315,4 @@ docker exec -it gitlab-runner gitlab-runner register
 - **Verification Commands**: To test that everything is installed correctly
 - **License**: This project is distributed under the repository’s license, check LICENSE for permitted uses and attribution.
 
-### Need help with anything else feel free to email me, otherwise I hope you find this project helpful :)
-
-**My deployed API can be found at:** https://network-traffic-api-845421504867.europe-west1.run.app
-
-**With the API documentation:** https://network-traffic-api-845421504867.europe-west1.run.app/docs
-
-**Heads up**: the API may take a few seconds to start up on first use. To be sure that my deployed API will be functional and last until mid November, 
-I've reduced the minimum instance and service scaling setting to 0. This will degrade the performance by increasing the cold start and therefore increasing latency 
-however it will allow a potential marker to utilize the API.
-
 ---
