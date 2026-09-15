@@ -1,4 +1,5 @@
 import asyncio
+import os
 import time
 import json
 import httpx
@@ -258,7 +259,8 @@ class APIPerformanceTester:
                 start_time = time.perf_counter()
                 try:
                     response = await client.post(
-                        f"{self.base_url}/model/reload/{time_window}"
+                        f"{self.base_url}/model/reload/{time_window}",
+                        headers={"X-Admin-Key": os.environ.get("ADMIN_API_KEY", "")}
                     )
                     end_time = time.perf_counter()
                     

@@ -1,5 +1,6 @@
 import os
-from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks, File, Request, UploadFile
+import secrets
+from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks, File, Header, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, validator
@@ -49,6 +50,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+def require_admin_key(x_admin_key: Optional[str] = Header(None)):
+    """Protect management endpoints. Disabled entirely unless ADMIN_API_KEY is set."""
+    expected = os.environ.get("ADMIN_API_KEY")
+    if not expected:
+        raise HTTPException(status_code=403, detail="Management endpoints are disabled")
+    if not x_admin_key or not secrets.compare_digest(x_admin_key, expected):
+        raise HTTPException(status_code=401, detail="Invalid or missing X-Admin-Key header")
 
 predictor = NetworkPredictor()
 preprocessor = DataPreprocessor()
@@ -533,102 +542,84 @@ async def detect_anomalies(request: AnomalyDetectionRequest):
 
 @app.post("/upload/pcap-local", tags=["Data Upload"])
 async def upload_pcap(
-    file: UploadFile = File(...),
-    process_immediately: bool = True
+    file: UploadFile = File(...)
 ):
+    """Upload and immediately process a PCAP file. The file is deleted after processing."""
+    original_name = Path(file.filename or "").name
+    if not original_name.endswith('.pcap'):
+        raise HTTPException(400, "Only PCAP files are supported")
+
+    import tempfile
+    upload_dir = Path(tempfile.gettempdir()) / "network_traffic_uploads"
+    upload_dir.mkdir(exist_ok=True)
+
+    # Random server side name only; never trust the client filename for paths
+    upload_path = upload_dir / f"{secrets.token_hex(16)}.pcap"
+
     try:
-        if not file.filename.endswith('.pcap'):
-            raise HTTPException(400, "Only PCAP files are supported")
-        
-        import tempfile
-        temp_dir = Path(tempfile.gettempdir())
-        upload_dir = temp_dir / "network_traffic_uploads"
-        upload_dir.mkdir(exist_ok=True)
-        
-        import secrets
-        safe_filename = f"{secrets.token_hex(8)}_{file.filename}"
-        upload_path = upload_dir / safe_filename
-        
         content = await file.read()
-        
+
         with open(upload_path, 'wb') as f:
             f.write(content)
-        
+
         logger.info(f"PCAP file saved to {upload_path} ({len(content)} bytes)")
-        
-        if process_immediately:
-            try:
-                flows = preprocessor.process_pcap(str(upload_path))
-                
-                if flows is None:
-                    flows = pd.DataFrame()
-                
-                stats = {
-                    "filename": file.filename,
-                    "file_size_bytes": len(content),
-                    "total_flows": len(flows) if not flows.empty else 0,
-                    "total_packets": int(flows['packet_count'].sum()) if not flows.empty and 'packet_count' in flows.columns else 0,
-                    "total_bytes": int(flows['total_bytes'].sum()) if not flows.empty and 'total_bytes' in flows.columns else 0,
-                    "duration": float(flows['duration'].sum()) if not flows.empty and 'duration' in flows.columns else 0,
-                    "unique_ips": (
-                        len(set(flows['src_ip'].unique()) | set(flows['dst_ip'].unique())) 
-                        if not flows.empty and 'src_ip' in flows.columns 
-                        else 0
-                    )
-                }
-                
-                try:
-                    upload_path.unlink()
-                    logger.info(f"Cleaned up temporary file: {upload_path}")
-                except Exception as cleanup_error:
-                    logger.warning(f"Could not clean up temp file: {cleanup_error}")
-                
-                return {
-                    "status": "processed",
-                    "statistics": stats,
-                    "message": "PCAP file processed successfully" if stats["total_flows"] > 0 else "PCAP processed with mock data (check logs)",
-                    "data_type": "real" if stats["total_flows"] > 0 else "mock",
-                    "available_time_windows": predictor.get_available_time_windows(),
-                    "recommended_time_window": "30s"  # Default recommendation
-                }
-                
-            except Exception as e:
-                try:
-                    upload_path.unlink()
-                except:
-                    pass
-                
-                import traceback
-                error_detail = traceback.format_exc()
-                logger.error(f"PCAP processing error: {error_detail}")
-                
-                return {
-                    "status": "error",
-                    "message": f"Failed to process PCAP: {str(e)}",
-                    "filename": file.filename,
-                    "error_type": type(e).__name__
-                }
-        else:
-            return {
-                "status": "uploaded",
-                "path": str(upload_path),
-                "message": "PCAP file uploaded, processing pending",
-                "available_time_windows": predictor.get_available_time_windows()
+
+        try:
+            flows = preprocessor.process_pcap(str(upload_path))
+
+            if flows is None:
+                flows = pd.DataFrame()
+
+            stats = {
+                "filename": original_name,
+                "file_size_bytes": len(content),
+                "total_flows": len(flows) if not flows.empty else 0,
+                "total_packets": int(flows['packet_count'].sum()) if not flows.empty and 'packet_count' in flows.columns else 0,
+                "total_bytes": int(flows['total_bytes'].sum()) if not flows.empty and 'total_bytes' in flows.columns else 0,
+                "duration": float(flows['duration'].sum()) if not flows.empty and 'duration' in flows.columns else 0,
+                "unique_ips": (
+                    len(set(flows['src_ip'].unique()) | set(flows['dst_ip'].unique()))
+                    if not flows.empty and 'src_ip' in flows.columns
+                    else 0
+                )
             }
-            
+
+            return {
+                "status": "processed",
+                "statistics": stats,
+                "message": "PCAP file processed successfully" if stats["total_flows"] > 0 else "PCAP processed with mock data (check logs)",
+                "data_type": "real" if stats["total_flows"] > 0 else "mock",
+                "available_time_windows": predictor.get_available_time_windows(),
+                "recommended_time_window": "30s"  # Default recommendation
+            }
+
+        except Exception as e:
+            import traceback
+            logger.error(f"PCAP processing error: {traceback.format_exc()}")
+
+            return {
+                "status": "error",
+                "message": "Failed to process PCAP - check server logs for details",
+                "filename": original_name,
+                "error_type": type(e).__name__
+            }
+
     except Exception as e:
         import traceback
-        error_detail = traceback.format_exc()
-        logger.error(f"PCAP upload error: {error_detail}")
-        
+        logger.error(f"PCAP upload error: {traceback.format_exc()}")
+
         return JSONResponse(
             status_code=500,
             content={
-                "detail": str(e),
                 "error_type": type(e).__name__,
                 "message": "Upload failed - check server logs for details"
             }
         )
+    finally:
+        try:
+            upload_path.unlink(missing_ok=True)
+        except Exception as cleanup_error:
+            logger.warning(f"Could not clean up temp file: {cleanup_error}")
 
 @app.post("/upload/pcap-deployed", tags=["Data Upload"])
 async def upload_pcap_deployed(
@@ -681,7 +672,6 @@ async def upload_pcap_deployed(
                 # Calculate statistics
                 stats = {
                     "filename": pcap_filename,
-                    "file_path": str(pcap_path),
                     "file_size_bytes": file_size,
                     "file_size_mb": round(file_size_mb, 2),
                     "total_flows": len(flows) if not flows.empty else 0,
@@ -720,9 +710,8 @@ async def upload_pcap_deployed(
                 
                 return {
                     "status": "error",
-                    "message": f"Failed to process pre-generated PCAP: {str(e)}",
+                    "message": "Failed to process pre-generated PCAP - check server logs for details",
                     "filename": pcap_filename,
-                    "file_path": str(pcap_path),
                     "file_size_mb": round(file_size_mb, 2),
                     "error_type": type(e).__name__,
                     "deployment_mode": "deployed_test"
@@ -731,7 +720,6 @@ async def upload_pcap_deployed(
             # Return file info without processing
             return {
                 "status": "ready",
-                "path": str(pcap_path),
                 "filename": pcap_filename,
                 "file_size_mb": round(file_size_mb, 2),
                 "message": f"Pre-generated PCAP file ready for processing ({file_size_mb:.2f} MB)",
@@ -750,7 +738,6 @@ async def upload_pcap_deployed(
         return JSONResponse(
             status_code=500,
             content={
-                "detail": str(e),
                 "error_type": type(e).__name__,
                 "message": "Failed to process pre-generated PCAP file",
                 "deployment_mode": "deployed_test"
@@ -758,14 +745,14 @@ async def upload_pcap_deployed(
         )
     
 # Model management endpoints
-@app.post("/model/reload/{time_window}", tags=["Model Management"])
-async def reload_time_window_model(time_window: str, model_path: Optional[str] = None):
-    """Reload a specific time window model"""
+@app.post("/model/reload/{time_window}", tags=["Model Management"], dependencies=[Depends(require_admin_key)])
+async def reload_time_window_model(time_window: str):
+    """Reload a specific time window model from its server-configured path (requires X-Admin-Key)"""
     if time_window not in ["10s", "30s", "1min"]:
         raise HTTPException(400, f"Invalid time window. Must be one of: 10s, 30s, 1min")
-    
+
     try:
-        success = await predictor.reload_model(time_window, model_path)
+        success = await predictor.reload_model(time_window)
         
         if success:
             return {
@@ -784,7 +771,7 @@ async def reload_time_window_model(time_window: str, model_path: Optional[str] =
             
     except Exception as e:
         logger.error(f"Model reload error for {time_window}: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Model reload failed - check server logs")
 
 @app.get("/metrics", tags=["Monitoring"])
 async def get_prometheus_metrics():

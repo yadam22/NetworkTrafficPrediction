@@ -155,7 +155,8 @@ class NetworkPredictor:
             return
         
         try:
-            checkpoint = torch.load(model_path, map_location=self.device, weights_only=False)
+            # weights_only=True prevents arbitrary code execution from a malicious attack
+            checkpoint = torch.load(model_path, map_location=self.device, weights_only=True)
             state_dict = checkpoint.get('model_state_dict', {})
             
             # Auto-detect model configuration from checkpoint
@@ -555,12 +556,9 @@ class NetworkPredictor:
         
         return capabilities if capabilities else ["demo_mode"]
     
-    async def reload_model(self, time_window: str, model_path: Optional[str] = None) -> bool:
-        """Reload a specific time window model"""
+    async def reload_model(self, time_window: str) -> bool:
+        """Reload a specific time window model from its configured path"""
         try:
-            if model_path:
-                self.config["transformer_model_paths"][time_window] = model_path
-            
             self._load_transformer_for_window(time_window)
             self._load_tokenizer_for_window(time_window)
             self._load_lstm_for_window(time_window)
